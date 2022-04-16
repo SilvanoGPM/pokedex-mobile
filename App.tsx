@@ -1,7 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { usePokemons } from './hooks/usePokemons';
 
 export default function App() {
+  const { pokemons } = usePokemons();
+  
+  console.log(pokemons);
+
   return (
     <View style={styles.container}>
       <Text>Open up App.tsx to start working on your app!</Text>
