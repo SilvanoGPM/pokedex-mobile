@@ -16,7 +16,7 @@ export function usePokemons(total = 100): UsePokemonsReturn {
   useEffect(() => {
     async function loadPokemons(): Promise<void> {
       try {
-        const pokemonsFound = await getPokemons(5);
+        const pokemonsFound = await getPokemons(total);
         setPokemons(pokemonsFound);
       } catch (err: any) {
         setError(err);

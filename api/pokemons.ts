@@ -12,22 +12,25 @@ export interface Pokemon {
   image: string;
 }
 
+async function toPokemon(value: any, index: number): Promise<Pokemon> {
+  const id = index + 1;
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+  const pokemonRaw: PokemonRaw = await response.json();
+
+  const pokemon = {
+    id: pokemonRaw.id,
+    name: pokemonRaw.name,
+    types: pokemonRaw.types.map(({ type }) => type.name),
+    image: pokemonRaw.sprites.front_default,
+  };
+
+  return pokemon;
+}
+
 export async function getPokemons(total = 150): Promise<Pokemon[]> {
-  const pokemons: Pokemon[] = [];
+  const pokemonsPromises = Array(total).fill(0).map(toPokemon);
 
-  for (let id = 1; id <= total; id++) {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-    const pokemonRaw: PokemonRaw = await response.json();
-
-    const pokemon = {
-      id: pokemonRaw.id,
-      name: pokemonRaw.name,
-      types: pokemonRaw.types.map(({ type }) => type.name),
-      image: pokemonRaw.sprites.front_default,
-    };
-
-    pokemons.push(pokemon);
-  }
+  const pokemons = await Promise.all(pokemonsPromises);
 
   return pokemons;
 }
