@@ -1,33 +1,33 @@
 export interface PokemonRaw {
-    id: number;
-    name: string;
-    types: Array<{ type: { name: string } }>;
-    sprites: { front_default: string };
+  id: number;
+  name: string;
+  types: Array<{ type: { name: string } }>;
+  sprites: { front_default: string };
 }
 
 export interface Pokemon {
-    id: number;
-    name: string;
-    types: string[];
-    image: string;
+  id: number;
+  name: string;
+  types: string[];
+  image: string;
 }
 
 export async function getPokemons(total = 150): Promise<Pokemon[]> {
-    const pokemons: Pokemon[] = [];
+  const pokemons: Pokemon[] = [];
 
-    for (let id = 1; id <= total; id++) {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-        const pokemonRaw: PokemonRaw = await response.json();
+  for (let id = 1; id <= total; id++) {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const pokemonRaw: PokemonRaw = await response.json();
 
-        const pokemon = { 
-            id: pokemonRaw.id,
-            name: pokemonRaw.name,
-            types: pokemonRaw.types.map(({ type }) => type.name),
-            image: pokemonRaw.sprites.front_default, 
-        };
+    const pokemon = {
+      id: pokemonRaw.id,
+      name: pokemonRaw.name,
+      types: pokemonRaw.types.map(({ type }) => type.name),
+      image: pokemonRaw.sprites.front_default,
+    };
 
-        pokemons.push(pokemon);
-    }
+    pokemons.push(pokemon);
+  }
 
-    return pokemons;
+  return pokemons;
 }

@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { getPokemons, Pokemon } from "../api/pokemons";
-import { useBoolean } from "./useBoolean";
+import { useEffect, useState } from 'react';
+import { getPokemons, Pokemon } from '../api/pokemons';
+import { useBoolean } from './useBoolean';
 
 type UsePokemonsReturn = {
-    pokemons: Pokemon[];
-    loading: boolean;
-    error?: Error | undefined;
+  pokemons: Pokemon[];
+  loading: boolean;
+  error?: Error | undefined;
 };
 
 export function usePokemons(total = 100): UsePokemonsReturn {
@@ -14,25 +14,25 @@ export function usePokemons(total = 100): UsePokemonsReturn {
   const [loading, , stopLoading] = useBoolean(true);
 
   useEffect(() => {
-      async function loadPokemons() {
-        try {
-            const pokemonsFound = await getPokemons(5);
-            setPokemons(pokemonsFound);
-        } catch (err: any) {
-            setError(err);
-        } finally {
-            stopLoading();
-        }
+    async function loadPokemons(): Promise<void> {
+      try {
+        const pokemonsFound = await getPokemons(5);
+        setPokemons(pokemonsFound);
+      } catch (err: any) {
+        setError(err);
+      } finally {
+        stopLoading();
       }
+    }
 
-      if (loading) {
-        loadPokemons();
-      }
+    if (loading) {
+      loadPokemons();
+    }
 
-      return () => {
-          stopLoading();
-      };
-  }, [loading, total]);
+    return () => {
+      stopLoading();
+    };
+  }, [loading, stopLoading, total]);
 
   return { pokemons, loading, error };
 }
