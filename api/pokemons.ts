@@ -29,8 +29,5 @@ async function toPokemon(value: any, index: number): Promise<Pokemon> {
 
 export async function getPokemons(total = 150): Promise<Pokemon[]> {
   const pokemonsPromises = Array(total).fill(0).map(toPokemon);
-
-  const pokemons = await Promise.all(pokemonsPromises);
-
-  return pokemons;
+  return Promise.all(pokemonsPromises);
 }
