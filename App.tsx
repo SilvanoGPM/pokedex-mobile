@@ -2,6 +2,8 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
 
 import {
   useFonts,
@@ -9,8 +11,12 @@ import {
   Roboto_700Bold as RobotoBold,
 } from '@expo-google-fonts/roboto';
 
-import { Pokemons } from './src/components/Pokemons';
-import { Loading } from './src/components/Loading';
+import { Loading } from 'src/components/Loading';
+import { Home } from 'src/screens/Home';
+import { RootStackParamList } from 'src/@types/routes.types';
+import { ViewPokemon } from 'src/screens/ViewPokemon';
+
+const { Navigator, Screen } = createNativeStackNavigator<RootStackParamList>();
 
 export default function App(): JSX.Element {
   const [fontsLoaded] = useFonts({
@@ -28,10 +34,25 @@ export default function App(): JSX.Element {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
-        <Pokemons />
+      <NavigationContainer>
+        <SafeAreaView style={{ flex: 1 }}>
+          <Navigator initialRouteName="Home">
+            <Screen
+              name="Home"
+              component={Home}
+              options={{ headerShown: false }}
+            />
+
+            <Screen
+              name="ViewPokemon"
+              component={ViewPokemon}
+              options={{ headerShown: false }}
+            />
+          </Navigator>
+        </SafeAreaView>
+
         <StatusBar style="auto" />
-      </SafeAreaView>
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 }
