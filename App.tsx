@@ -24,7 +24,7 @@ export default function App(): JSX.Element {
   });
 
   if (!fontsLoaded) {
-    return <Loading />;
+    return <Loading text="Loading fonts..." />;
   }
 
   return (

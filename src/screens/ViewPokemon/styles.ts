@@ -7,8 +7,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
 
+  header: {
+    marginTop: 20,
+    width: '90%',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+
+  headerTitle: {
+    flex: 1,
+    fontSize: 30,
+    textAlign: 'right',
+  },
+
   image: {
-    marginTop: 30,
+    marginTop: 40,
     alignItems: 'center',
     width: '90%',
     borderRadius: 30,
@@ -28,11 +41,12 @@ const styles = StyleSheet.create({
   },
 
   pokemonName: {
-    marginBottom: 5,
-    fontSize: 35,
+    fontSize: 33,
     color: '#191919',
     fontFamily: 'RobotoBold',
     textDecorationLine: 'underline',
+    textAlign: 'right',
+    flex: 1,
   },
 
   infoText: {

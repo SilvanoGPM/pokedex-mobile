@@ -51,7 +51,7 @@ export function Pokemons(): JSX.Element {
   if (pokemons.loading) {
     return (
       <View style={{ flex: 1 }}>
-        <Loading />
+        <Loading text="Fetching more..." />
       </View>
     );
   }

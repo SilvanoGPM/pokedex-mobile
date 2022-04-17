@@ -7,6 +7,7 @@ import { getColorOfPokemonType } from 'src/utils/getColorOfPokemonType';
 import { Pokemon } from 'src/api/pokemons';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from 'src/@types/routes.types';
+import { titleString } from 'src/utils/titleString';
 
 import styles from './styles';
 
@@ -27,7 +28,7 @@ export function PokemonItem({ data }: PokemonItemProps): JSX.Element {
   return (
     <View style={[styles.pokemonItem, { backgroundColor }]}>
       <TouchableOpacity onPress={handleNavigation}>
-        <Text style={styles.pokemonItemText}>{data.name}</Text>
+        <Text style={styles.pokemonItemText}>{titleString(data.name)}</Text>
         <SvgUri width={100} height={100} uri={data.image} />
       </TouchableOpacity>
     </View>

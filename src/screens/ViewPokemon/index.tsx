@@ -1,7 +1,8 @@
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SvgUri } from 'react-native-svg';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 import { RootStackParamList } from 'src/@types/routes.types';
 import { usePokemon } from 'src/hooks/usePokemon';
@@ -17,11 +18,14 @@ type ViewPokemonProps = NativeStackScreenProps<
   'ViewPokemon'
 >;
 
-export function ViewPokemon({ route }: ViewPokemonProps): JSX.Element {
+export function ViewPokemon({
+  navigation,
+  route,
+}: ViewPokemonProps): JSX.Element {
   const { pokemon, loading } = usePokemon(route.params.id);
 
   if (loading) {
-    return <Loading />;
+    return <Loading text="Loading pokemon..." />;
   }
 
   function getTypes(): JSX.Element {
@@ -64,6 +68,13 @@ export function ViewPokemon({ route }: ViewPokemonProps): JSX.Element {
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={navigation.goBack}>
+            <Icon name="caretleft" size={30} color="#191919" />
+          </TouchableOpacity>
+          <Text style={styles.pokemonName}>{titleString(pokemon.name)}</Text>
+        </View>
+
         <View style={[styles.image, { backgroundColor }]}>
           <Text style={styles.pokemonId}>#0{pokemon.id}</Text>
           <SvgUri width={200} height={200} uri={pokemon.image} />
@@ -71,7 +82,6 @@ export function ViewPokemon({ route }: ViewPokemonProps): JSX.Element {
 
         <View style={styles.info}>
           {getTypes()}
-          <Text style={styles.pokemonName}>{titleString(pokemon.name)}</Text>
           <Text style={styles.infoText}>Weight: {pokemon.weight}</Text>
           <Text style={styles.infoText}>Height: {pokemon.height}</Text>
           <Text style={styles.infoText}>
