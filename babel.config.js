@@ -12,6 +12,7 @@ module.exports = function load(api) {
           },
         },
       ],
+      'react-native-reanimated/plugin',
     ],
   };
 };

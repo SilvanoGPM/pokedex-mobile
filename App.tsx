@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import 'react-native-gesture-handler';
 
 import {
   useFonts,
@@ -11,9 +12,10 @@ import {
 } from '@expo-google-fonts/roboto';
 
 import { Loading } from 'src/components/Loading';
-import { Home } from 'src/screens/Home';
 import { RootStackParamList } from 'src/@types/routes.types';
 import { ViewPokemon } from 'src/screens/ViewPokemon';
+
+import { Drawer } from './Drawer';
 
 const { Navigator, Screen } = createNativeStackNavigator<RootStackParamList>();
 
@@ -34,7 +36,7 @@ export default function App(): JSX.Element {
           <Navigator initialRouteName="Home">
             <Screen
               name="Home"
-              component={Home}
+              component={Drawer}
               options={{ headerShown: false }}
             />
 

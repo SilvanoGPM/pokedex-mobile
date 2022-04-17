@@ -12,8 +12,8 @@ export function Loading({ text = 'Loading...' }: LoadingProps): JSX.Element {
       <Text
         style={{
           fontSize: 20,
-          fontFamily: 'RobotoBold',
           marginTop: 20,
+          fontWeight: 'bold',
           textAlign: 'center',
         }}
       >
