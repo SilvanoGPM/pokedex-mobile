@@ -5,13 +5,24 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { Loading } from 'src/components/Loading';
 import { Pokemon } from 'src/api/pokemons';
 import { usePokemons } from 'src/hooks/usePokemons';
+import { Error as ErrorComponent } from 'src/components/Error';
 
 import { PokemonItem } from './PokemonItem';
 import styles from './styles';
 
 export function Pokemons(): JSX.Element {
   const listRef = useRef<FlatList>(null);
-  const pokemons = usePokemons(50);
+
+  const {
+    pokemons,
+    loading,
+    counter,
+    hasNext,
+    hasPrevious,
+    nextPage,
+    prevPage,
+    error,
+  } = usePokemons(50);
 
   function keyExtractor(item: Pokemon): string {
     return `${item.id} - ${item.name}`;
@@ -24,10 +35,10 @@ export function Pokemons(): JSX.Element {
           <TouchableOpacity
             style={[
               styles.footerButton,
-              { opacity: pokemons.hasPrevious || pokemons.loading ? 1 : 0.5 },
+              { opacity: hasPrevious || loading ? 1 : 0.5 },
             ]}
-            disabled={!pokemons.hasPrevious || pokemons.loading}
-            onPress={pokemons.prevPage}
+            disabled={!hasPrevious || loading}
+            onPress={prevPage}
           >
             <Icon name="caretleft" size={30} color="#191919" />
           </TouchableOpacity>
@@ -35,32 +46,32 @@ export function Pokemons(): JSX.Element {
           <TouchableOpacity
             style={[
               styles.footerButton,
-              { opacity: pokemons.hasNext || pokemons.loading ? 1 : 0.5 },
+              { opacity: hasNext || loading ? 1 : 0.5 },
             ]}
-            disabled={!pokemons.hasNext || pokemons.loading}
-            onPress={pokemons.nextPage}
+            disabled={!hasNext || loading}
+            onPress={nextPage}
           >
             <Icon name="caretright" size={30} color="#191919" />
           </TouchableOpacity>
         </View>
-        <Text style={styles.footerCounter}>{pokemons.counter}</Text>
+        <Text style={styles.footerCounter}>{counter}</Text>
       </View>
     );
   }
 
-  if (pokemons.loading) {
-    return (
-      <View style={{ flex: 1 }}>
-        <Loading text="Fetching more..." />
-      </View>
-    );
+  if (error) {
+    return <ErrorComponent />;
+  }
+
+  if (loading) {
+    return <Loading text="Fetching more..." />;
   }
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 10 }}>
       <FlatList
         keyExtractor={keyExtractor}
-        data={pokemons.pokemons}
+        data={pokemons}
         renderItem={({ item }) => <PokemonItem data={item} />}
         numColumns={2}
         ListFooterComponent={renderFooter}

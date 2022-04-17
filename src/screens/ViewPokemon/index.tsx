@@ -10,6 +10,7 @@ import { Loading } from 'src/components/Loading';
 import { getColorOfPokemonType } from 'src/utils/getColorOfPokemonType';
 import { titleString } from 'src/utils/titleString';
 import { getColorOfStat } from 'src/utils/getColorOfStat';
+import { Error as ErrorComponent } from 'src/components/Error';
 
 import styles from './styles';
 
@@ -22,7 +23,11 @@ export function ViewPokemon({
   navigation,
   route,
 }: ViewPokemonProps): JSX.Element {
-  const { pokemon, loading } = usePokemon(route.params.id);
+  const { pokemon, error, loading } = usePokemon(route.params.id);
+
+  if (error) {
+    return <ErrorComponent />;
+  }
 
   if (loading) {
     return <Loading text="Loading pokemon..." />;
