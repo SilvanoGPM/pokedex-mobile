@@ -8,7 +8,11 @@ interface UsePokemonsReturn {
   pokemons: Pokemon[];
   loading: boolean;
   error?: Error | undefined;
+  counter: number;
+  hasNext: boolean;
+  hasPrevious: boolean;
   nextPage: () => void;
+  prevPage: () => void;
 }
 
 interface ListInfo {
@@ -24,18 +28,21 @@ export function usePokemons(limit = 10, offset = 0): UsePokemonsReturn {
     previous: null,
   });
 
+  const [counter, setCounter] = useState(1);
+
   const [error, setError] = useState<Error | undefined>(undefined);
   const [loading, startLoading, stopLoading] = useBoolean(true);
 
   const loadPokemons = useCallback(
-    async (params: GetPokemonsParams) => {
+    async (params: GetPokemonsParams, addToCounter = 0) => {
       try {
         startLoading();
 
         const { pokemons, next, previous } = await getPokemons(params);
 
-        setPokemons((state) => [...state, ...pokemons]);
+        setPokemons(pokemons);
         setListInfo({ next, previous });
+        setCounter((prevCounter) => prevCounter + addToCounter);
       } catch (err: any) {
         setError(err);
       } finally {
@@ -53,9 +60,26 @@ export function usePokemons(limit = 10, offset = 0): UsePokemonsReturn {
     const { next } = listInfo;
 
     if (next) {
-      loadPokemons({ superUrl: next });
+      loadPokemons({ superUrl: next }, 1);
     }
   }, [listInfo, loadPokemons]);
 
-  return { pokemons, loading, error, nextPage };
+  const prevPage = useCallback(() => {
+    const { previous } = listInfo;
+
+    if (previous) {
+      loadPokemons({ superUrl: previous }, -1);
+    }
+  }, [listInfo, loadPokemons]);
+
+  return {
+    pokemons,
+    loading,
+    error,
+    counter,
+    hasNext: Boolean(listInfo.next),
+    hasPrevious: Boolean(listInfo.previous),
+    nextPage,
+    prevPage,
+  };
 }

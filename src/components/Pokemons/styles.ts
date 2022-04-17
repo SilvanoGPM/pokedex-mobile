@@ -20,6 +20,35 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: '#191919',
   },
+
+  backToTop: {
+    position: 'absolute',
+    bottom: 40,
+    right: 40,
+  },
+
+  footer: {
+    width: '100%',
+  },
+
+  footerButtons: {
+    flexDirection: 'row',
+    marginVertical: 10,
+  },
+
+  footerButton: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  footerCounter: {
+    fontFamily: 'RobotoBold',
+    fontSize: 20,
+    width: '100%',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
 });
 
 export default styles;
