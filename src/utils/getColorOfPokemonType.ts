@@ -3,7 +3,7 @@ const colors = new Map<string, string>(
     steel: '#f4f4f4',
     fire: '#fddfdf',
     grass: '#defde0',
-    electric: '#fcf7de',
+    eletric: '#fcf7de',
     water: '#def3fd',
     ice: '#def3fd',
     ground: '#f4e7da',
@@ -16,11 +16,13 @@ const colors = new Map<string, string>(
     flying: '#f5f5f5',
     fighting: '#e6e0d4',
     normal: '#f5f5f5',
+    ghost: '#705898',
+    dark: '#705848',
   })
 );
 
 export function getColorOfPokemonType(type: string): string {
-  const defaultColor = '#ee1515';
+  const defaultColor = '#68a090';
 
   if (colors.has(type)) {
     return colors.get(type) || defaultColor;

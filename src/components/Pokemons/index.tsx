@@ -17,20 +17,6 @@ export function Pokemons(): JSX.Element {
     return `${item.id} - ${item.name}`;
   }
 
-  function backToTop(): void {
-    listRef.current?.scrollToOffset({ animated: true, offset: 0 });
-  }
-
-  function handlePrevious(): void {
-    backToTop();
-    pokemons.prevPage();
-  }
-
-  function handleNext(): void {
-    backToTop();
-    pokemons.nextPage();
-  }
-
   function renderFooter(): JSX.Element {
     return (
       <View style={styles.footer}>
@@ -41,7 +27,7 @@ export function Pokemons(): JSX.Element {
               { opacity: pokemons.hasPrevious || pokemons.loading ? 1 : 0.5 },
             ]}
             disabled={!pokemons.hasPrevious || pokemons.loading}
-            onPress={handlePrevious}
+            onPress={pokemons.prevPage}
           >
             <Icon name="caretleft" size={30} color="#191919" />
           </TouchableOpacity>
@@ -52,12 +38,20 @@ export function Pokemons(): JSX.Element {
               { opacity: pokemons.hasNext || pokemons.loading ? 1 : 0.5 },
             ]}
             disabled={!pokemons.hasNext || pokemons.loading}
-            onPress={handleNext}
+            onPress={pokemons.nextPage}
           >
             <Icon name="caretright" size={30} color="#191919" />
           </TouchableOpacity>
         </View>
         <Text style={styles.footerCounter}>{pokemons.counter}</Text>
+      </View>
+    );
+  }
+
+  if (pokemons.loading) {
+    return (
+      <View style={{ flex: 1 }}>
+        <Loading />
       </View>
     );
   }
@@ -72,8 +66,6 @@ export function Pokemons(): JSX.Element {
         ListFooterComponent={renderFooter}
         ref={listRef}
       />
-
-      {pokemons.loading && <Loading />}
     </View>
   );
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -25,11 +24,7 @@ export default function App(): JSX.Element {
   });
 
   if (!fontsLoaded) {
-    return (
-      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-        <Loading />
-      </View>
-    );
+    return <Loading />;
   }
 
   return (

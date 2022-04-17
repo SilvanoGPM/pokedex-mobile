@@ -21,11 +21,7 @@ export function ViewPokemon({ route }: ViewPokemonProps): JSX.Element {
   const { pokemon, loading } = usePokemon(route.params.id);
 
   if (loading) {
-    return (
-      <View style={{ flex: 1 }}>
-        <Loading />
-      </View>
-    );
+    return <Loading />;
   }
 
   function getTypes(): JSX.Element {
@@ -51,7 +47,7 @@ export function ViewPokemon({ route }: ViewPokemonProps): JSX.Element {
           const backgroundColor = getColorOfStat(name);
 
           return (
-            <View style={styles.statWrapper}>
+            <View key={name} style={styles.statWrapper}>
               <Text style={[styles.stat, { backgroundColor }]}>
                 {titleString(name)}:
               </Text>
