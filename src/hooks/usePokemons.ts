@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { getPokemons, Pokemon } from '../api/pokemons';
+
+import { getPokemons, Pokemon } from 'src/api/pokemons';
+
 import { useBoolean } from './useBoolean';
 
 type UsePokemonsReturn = {

@@ -1,8 +1,9 @@
 import React from 'react';
 import { ActivityIndicator, FlatList, View } from 'react-native';
 
-import { Pokemon } from '../../api/pokemons';
-import { usePokemons } from '../../hooks/usePokemons';
+import { Pokemon } from 'src/api/pokemons';
+import { usePokemons } from 'src/hooks/usePokemons';
+
 import { PokemonItem } from './PokemonItem';
 
 export function Pokemons(): JSX.Element {

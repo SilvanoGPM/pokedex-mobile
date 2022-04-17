@@ -1,7 +1,8 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
-import { Pokemons } from './components/Pokemons';
+
+import { Pokemons } from './src/components/Pokemons';
 
 const styles = StyleSheet.create({
   container: {

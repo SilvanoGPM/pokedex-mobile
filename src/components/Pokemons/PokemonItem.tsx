@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Pokemon } from '../../api/pokemons';
+
+import { Pokemon } from 'src/api/pokemons';
 
 interface PokemonItemProps {
   data: Pokemon;
