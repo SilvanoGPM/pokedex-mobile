@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -29,7 +29,14 @@ export function PokemonButton({ data }: PokemonButtonProps): JSX.Element {
     <View style={[styles.pokemonButton, { backgroundColor }]}>
       <TouchableOpacity onPress={handleNavigation}>
         <Text style={styles.pokemonButtonText}>{titleString(data.name)}</Text>
-        <SvgUri width={100} height={100} uri={data.image} />
+        {!data.image.endsWith('svg') ? (
+          <Image
+            source={{ uri: data.image }}
+            style={{ width: 100, height: 100 }}
+          />
+        ) : (
+          <SvgUri width={100} height={100} uri={data.image} />
+        )}
       </TouchableOpacity>
     </View>
   );

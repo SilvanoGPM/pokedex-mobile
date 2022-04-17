@@ -11,7 +11,12 @@ export interface PokemonRaw {
   abilities: Array<{ ability: { name: string } }>;
   moves: Array<{ move: { name: string } }>;
   stats: Array<{ base_stat: number; stat: { name: string } }>;
-  sprites: { other: { dream_world: { front_default: string } } };
+  sprites: {
+    other: {
+      dream_world: { front_default: string };
+      'official-artwork': { front_default: string };
+    };
+  };
   weight: number;
   height: number;
 }
@@ -70,7 +75,9 @@ export async function getPokemon({
       name: stat.name,
       value: baseStat,
     })),
-    image: sprites.other.dream_world.front_default,
+    image:
+      sprites.other.dream_world.front_default ||
+      sprites.other['official-artwork'].front_default,
     name,
     weight,
     height,

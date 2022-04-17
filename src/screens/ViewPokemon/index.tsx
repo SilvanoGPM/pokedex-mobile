@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View, Image } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SvgUri } from 'react-native-svg';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -82,7 +82,14 @@ export function ViewPokemon({
 
         <View style={[styles.image, { backgroundColor }]}>
           <Text style={styles.pokemonId}>#0{pokemon.id}</Text>
-          <SvgUri width={200} height={200} uri={pokemon.image} />
+          {!pokemon.image.endsWith('svg') ? (
+            <Image
+              source={{ uri: pokemon.image }}
+              style={{ width: 100, height: 100 }}
+            />
+          ) : (
+            <SvgUri width={100} height={100} uri={pokemon.image} />
+          )}
         </View>
 
         <View style={styles.info}>
