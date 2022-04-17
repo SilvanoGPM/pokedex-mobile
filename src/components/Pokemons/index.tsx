@@ -64,11 +64,11 @@ export function Pokemons(): JSX.Element {
   }
 
   if (loading) {
-    return <Loading text="Fetching more..." />;
+    return <Loading text="Fetching..." />;
   }
 
   return (
-    <View style={{ flex: 1, paddingHorizontal: 10 }}>
+    <View style={{ width: '100%', paddingHorizontal: 10 }}>
       <FlatList
         keyExtractor={keyExtractor}
         data={pokemons}

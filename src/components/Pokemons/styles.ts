@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
 
   footer: {
     width: '100%',
+    marginBottom: 150,
   },
 
   footerButtons: {

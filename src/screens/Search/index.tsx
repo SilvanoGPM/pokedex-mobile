@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { useToast } from 'react-native-toast-notifications';
 
@@ -68,13 +68,20 @@ export function Search(): JSX.Element {
 
       {loading && <Loading text="Searching..." />}
 
-      {pokemon.id && (
+      {pokemon.id && !loading && (
         <View style={styles.pokemonFound}>
           <TouchableOpacity style={styles.resetPokemon} onPress={resetPokemon}>
             <Icon name="cross" color="#191919" size={30} />
           </TouchableOpacity>
           <PokemonButton data={pokemon} />
         </View>
+      )}
+
+      {!pokemon.id && !loading && (
+        <Image
+          source={require('../../../assets/pokeball.png')}
+          style={{ width: 150, height: 150, marginTop: 50 }}
+        />
       )}
     </View>
   );
