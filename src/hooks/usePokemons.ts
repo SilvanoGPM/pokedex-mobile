@@ -1,40 +1,61 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { getPokemons, Pokemon } from 'src/api/pokemons';
+import { getPokemons, GetPokemonsParams, Pokemon } from 'src/api/pokemons';
 
 import { useBoolean } from './useBoolean';
 
-type UsePokemonsReturn = {
+interface UsePokemonsReturn {
   pokemons: Pokemon[];
   loading: boolean;
   error?: Error | undefined;
-};
+  nextPage: () => void;
+}
 
-export function usePokemons(total = 100): UsePokemonsReturn {
+interface ListInfo {
+  next: string | null;
+  previous: string | null;
+}
+
+export function usePokemons(limit = 10, offset = 0): UsePokemonsReturn {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-  const [error, setError] = useState<Error | undefined>(undefined);
-  const [loading, , stopLoading] = useBoolean(true);
 
-  useEffect(() => {
-    async function loadPokemons(): Promise<void> {
+  const [listInfo, setListInfo] = useState<ListInfo>({
+    next: null,
+    previous: null,
+  });
+
+  const [error, setError] = useState<Error | undefined>(undefined);
+  const [loading, startLoading, stopLoading] = useBoolean(true);
+
+  const loadPokemons = useCallback(
+    async (params: GetPokemonsParams) => {
       try {
-        const pokemonsFound = await getPokemons(total);
-        setPokemons(pokemonsFound);
+        startLoading();
+
+        const { pokemons, next, previous } = await getPokemons(params);
+
+        setPokemons((state) => [...state, ...pokemons]);
+        setListInfo({ next, previous });
       } catch (err: any) {
         setError(err);
       } finally {
         stopLoading();
       }
+    },
+    [stopLoading, startLoading]
+  );
+
+  useEffect(() => {
+    loadPokemons({ limit, offset });
+  }, [loadPokemons, limit, offset]);
+
+  const nextPage = useCallback(() => {
+    const { next } = listInfo;
+
+    if (next) {
+      loadPokemons({ superUrl: next });
     }
+  }, [listInfo, loadPokemons]);
 
-    if (loading) {
-      loadPokemons();
-    }
-
-    return () => {
-      stopLoading();
-    };
-  }, [loading, stopLoading, total]);
-
-  return { pokemons, loading, error };
+  return { pokemons, loading, error, nextPage };
 }

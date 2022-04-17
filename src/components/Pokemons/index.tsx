@@ -1,5 +1,12 @@
 import React from 'react';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+
+import {
+  ActivityIndicator,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { Pokemon } from 'src/api/pokemons';
 import { usePokemons } from 'src/hooks/usePokemons';
@@ -13,19 +20,19 @@ export function Pokemons(): JSX.Element {
     return String(item.id);
   }
 
-  if (pokemons.loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="black" />
-      </View>
-    );
-  }
-
   return (
-    <FlatList
-      keyExtractor={keyExtractor}
-      data={pokemons.pokemons}
-      renderItem={({ item }) => <PokemonItem data={item} />}
-    />
+    <View>
+      <FlatList
+        keyExtractor={keyExtractor}
+        data={pokemons.pokemons}
+        renderItem={({ item }) => <PokemonItem data={item} />}
+      />
+
+      {pokemons.loading && <ActivityIndicator size="large" color="black" />}
+
+      <TouchableOpacity onPress={pokemons.nextPage}>
+        <Text>Next</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
