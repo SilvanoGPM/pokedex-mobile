@@ -1,38 +1,31 @@
 import React from 'react';
+import { FlatList, View } from 'react-native';
 
-import {
-  ActivityIndicator,
-  FlatList,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-
+import { Loading } from 'src/components/Loading';
 import { Pokemon } from 'src/api/pokemons';
 import { usePokemons } from 'src/hooks/usePokemons';
 
 import { PokemonItem } from './PokemonItem';
 
 export function Pokemons(): JSX.Element {
-  const pokemons = usePokemons(5);
+  const pokemons = usePokemons(20);
 
   function keyExtractor(item: Pokemon): string {
-    return String(item.id);
+    return `${item.id} - ${item.name}`;
   }
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <FlatList
         keyExtractor={keyExtractor}
         data={pokemons.pokemons}
         renderItem={({ item }) => <PokemonItem data={item} />}
+        numColumns={2}
+        onEndReachedThreshold={0.2}
+        onEndReached={pokemons.nextPage}
       />
 
-      {pokemons.loading && <ActivityIndicator size="large" color="black" />}
-
-      <TouchableOpacity onPress={pokemons.nextPage}>
-        <Text>Next</Text>
-      </TouchableOpacity>
+      {pokemons.loading && <Loading />}
     </View>
   );
 }
