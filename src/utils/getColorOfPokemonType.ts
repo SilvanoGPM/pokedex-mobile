@@ -3,7 +3,7 @@ const colors = new Map<string, string>(
     steel: '#f4f4f4',
     fire: '#fddfdf',
     grass: '#defde0',
-    eletric: '#fcf7de',
+    electric: '#fcf7de',
     water: '#def3fd',
     ice: '#def3fd',
     ground: '#f4e7da',

@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { ToastProvider } from 'react-native-toast-notifications';
 import 'react-native-gesture-handler';
 
 import {
@@ -30,26 +31,28 @@ export default function App(): JSX.Element {
   }
 
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <SafeAreaView style={{ flex: 1 }}>
-          <Navigator initialRouteName="Home">
-            <Screen
-              name="Home"
-              component={Drawer}
-              options={{ headerShown: false }}
-            />
+    <ToastProvider>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <SafeAreaView style={{ flex: 1 }}>
+            <Navigator initialRouteName="Home">
+              <Screen
+                name="Home"
+                component={Drawer}
+                options={{ headerShown: false }}
+              />
 
-            <Screen
-              name="ViewPokemon"
-              component={ViewPokemon}
-              options={{ headerShown: false }}
-            />
-          </Navigator>
-        </SafeAreaView>
+              <Screen
+                name="ViewPokemon"
+                component={ViewPokemon}
+                options={{ headerShown: false }}
+              />
+            </Navigator>
+          </SafeAreaView>
 
-        <StatusBar style="auto" />
-      </NavigationContainer>
-    </SafeAreaProvider>
+          <StatusBar style="auto" />
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </ToastProvider>
   );
 }

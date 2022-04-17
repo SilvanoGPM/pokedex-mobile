@@ -11,11 +11,11 @@ import { titleString } from 'src/utils/titleString';
 
 import styles from './styles';
 
-interface PokemonItemProps {
+interface PokemonButtonProps {
   data: Pokemon;
 }
 
-export function PokemonItem({ data }: PokemonItemProps): JSX.Element {
+export function PokemonButton({ data }: PokemonButtonProps): JSX.Element {
   const backgroundColor = getColorOfPokemonType(data.types[0]);
 
   const navigation =
@@ -26,9 +26,9 @@ export function PokemonItem({ data }: PokemonItemProps): JSX.Element {
   }
 
   return (
-    <View style={[styles.pokemonItem, { backgroundColor }]}>
+    <View style={[styles.pokemonButton, { backgroundColor }]}>
       <TouchableOpacity onPress={handleNavigation}>
-        <Text style={styles.pokemonItemText}>{titleString(data.name)}</Text>
+        <Text style={styles.pokemonButtonText}>{titleString(data.name)}</Text>
         <SvgUri width={100} height={100} uri={data.image} />
       </TouchableOpacity>
     </View>

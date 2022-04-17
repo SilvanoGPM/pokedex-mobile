@@ -6,8 +6,8 @@ import { Loading } from 'src/components/Loading';
 import { Pokemon } from 'src/api/pokemons';
 import { usePokemons } from 'src/hooks/usePokemons';
 import { Error as ErrorComponent } from 'src/components/Error';
+import { PokemonButton } from 'src/components/PokemonButton';
 
-import { PokemonItem } from './PokemonItem';
 import styles from './styles';
 
 export function Pokemons(): JSX.Element {
@@ -72,7 +72,7 @@ export function Pokemons(): JSX.Element {
       <FlatList
         keyExtractor={keyExtractor}
         data={pokemons}
-        renderItem={({ item }) => <PokemonItem data={item} />}
+        renderItem={({ item }) => <PokemonButton data={item} />}
         numColumns={2}
         ListFooterComponent={renderFooter}
         ref={listRef}
