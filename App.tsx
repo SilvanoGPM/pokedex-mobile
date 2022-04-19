@@ -15,12 +15,15 @@ import {
 import { Loading } from 'src/components/Loading';
 import { RootStackParamList } from 'src/@types/routes.types';
 import { ViewPokemon } from 'src/screens/ViewPokemon';
+import { useHasUpdates } from 'src/hooks/useHasUpdates';
 
 import { Drawer } from './Drawer';
 
 const { Navigator, Screen } = createNativeStackNavigator<RootStackParamList>();
 
 export default function App(): JSX.Element {
+  useHasUpdates();
+
   const [fontsLoaded] = useFonts({
     RobotoRegular,
     RobotoBold,
