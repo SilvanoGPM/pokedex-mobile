@@ -11,6 +11,7 @@ interface UsePokemonsReturn {
   counter: number;
   hasNext: boolean;
   hasPrevious: boolean;
+  reload: () => Promise<void>;
   nextPage: () => void;
   prevPage: () => void;
 }
@@ -56,6 +57,10 @@ export function usePokemons(limit = 10, offset = 0): UsePokemonsReturn {
     loadPokemons({ limit, offset });
   }, [loadPokemons, limit, offset]);
 
+  const reload = useCallback(async () => {
+    loadPokemons({ limit, offset });
+  }, [limit, offset, loadPokemons]);
+
   const nextPage = useCallback(() => {
     const { next } = listInfo;
 
@@ -79,6 +84,7 @@ export function usePokemons(limit = 10, offset = 0): UsePokemonsReturn {
     counter,
     hasNext: Boolean(listInfo.next),
     hasPrevious: Boolean(listInfo.previous),
+    reload,
     nextPage,
     prevPage,
   };

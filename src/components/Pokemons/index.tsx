@@ -1,17 +1,25 @@
-import React, { useRef } from 'react';
-import { FlatList, TouchableOpacity, View, Text } from 'react-native';
+import React from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
+
+import {
+  FlatList,
+  TouchableOpacity,
+  View,
+  Text,
+  RefreshControl,
+} from 'react-native';
 
 import { Loading } from 'src/components/Loading';
 import { Pokemon } from 'src/api/pokemons';
 import { usePokemons } from 'src/hooks/usePokemons';
 import { Error as ErrorComponent } from 'src/components/Error';
 import { PokemonButton } from 'src/components/PokemonButton';
+import { useBoolean } from 'src/hooks/useBoolean';
 
 import styles from './styles';
 
 export function Pokemons(): JSX.Element {
-  const listRef = useRef<FlatList>(null);
+  const [refreshing, startRefresh, stopRefresh] = useBoolean(false);
 
   const {
     pokemons,
@@ -19,6 +27,7 @@ export function Pokemons(): JSX.Element {
     counter,
     hasNext,
     hasPrevious,
+    reload,
     nextPage,
     prevPage,
     error,
@@ -59,6 +68,14 @@ export function Pokemons(): JSX.Element {
     );
   }
 
+  async function handleRefresh(): Promise<void> {
+    startRefresh();
+
+    await reload();
+
+    stopRefresh();
+  }
+
   if (error) {
     return <ErrorComponent />;
   }
@@ -71,11 +88,13 @@ export function Pokemons(): JSX.Element {
     <View style={{ width: '100%', paddingHorizontal: 10 }}>
       <FlatList
         keyExtractor={keyExtractor}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        }
         data={pokemons}
         renderItem={({ item }) => <PokemonButton data={item} />}
         numColumns={2}
         ListFooterComponent={renderFooter}
-        ref={listRef}
       />
     </View>
   );
