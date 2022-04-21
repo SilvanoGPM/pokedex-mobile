@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Text, View } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
 
 import { Pokemons } from 'src/components/Pokemons';
+import { Offline } from 'src/components/Offline';
 
 import styles from './styles';
 
 export function Home(): JSX.Element {
+  const [isOffline, setIsOffline] = useState(true);
+
+  useEffect(() => {
+    async function fetchIsOffline(): Promise<void> {
+      const { isConnected } = await NetInfo.fetch();
+
+      setIsOffline(!isConnected);
+    }
+
+    fetchIsOffline();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={{ width: '80%' }}>
@@ -27,7 +41,7 @@ export function Home(): JSX.Element {
         }}
       />
 
-      <Pokemons />
+      {isOffline ? <Offline /> : <Pokemons />}
     </View>
   );
 }
