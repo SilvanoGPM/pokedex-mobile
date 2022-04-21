@@ -21,7 +21,7 @@ interface ListInfo {
   previous: string | null;
 }
 
-export function usePokemons(limit = 10, offset = 0): UsePokemonsReturn {
+export function useFetchPokemons(limit = 10, offset = 0): UsePokemonsReturn {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
 
   const [listInfo, setListInfo] = useState<ListInfo>({

@@ -10,7 +10,7 @@ interface UsePokemonReturn {
   error?: Error | undefined;
 }
 
-export function usePokemon(id: number): UsePokemonReturn {
+export function useFetchPokemon(id: number): UsePokemonReturn {
   const [pokemon, setPokemon] = useState<Pokemon>({} as Pokemon);
 
   const [error, setError] = useState<Error | undefined>(undefined);

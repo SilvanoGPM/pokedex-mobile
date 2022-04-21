@@ -11,7 +11,7 @@ import {
 
 import { Loading } from 'src/components/Loading';
 import { Pokemon } from 'src/api/pokemons';
-import { usePokemons } from 'src/hooks/usePokemons';
+import { useFetchPokemons } from 'src/hooks/useFetchPokemons';
 import { Error as ErrorComponent } from 'src/components/Error';
 import { PokemonButton } from 'src/components/PokemonButton';
 import { useBoolean } from 'src/hooks/useBoolean';
@@ -31,7 +31,7 @@ export function Pokemons(): JSX.Element {
     nextPage,
     prevPage,
     error,
-  } = usePokemons(50);
+  } = useFetchPokemons(50);
 
   function keyExtractor(item: Pokemon): string {
     return `${item.id} - ${item.name}`;
