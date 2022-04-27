@@ -22,7 +22,7 @@ export function PokemonButton({ data }: PokemonButtonProps): JSX.Element {
     useNavigation<NativeStackNavigationProp<RootStackParamList, 'Home'>>();
 
   function handleNavigation(): void {
-    navigation.navigate('ViewPokemon', { id: data.id });
+    navigation.navigate('ViewPokemon', { pokemon: data });
   }
 
   return (

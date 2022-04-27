@@ -1,6 +1,8 @@
+import { Pokemon } from 'src/api/pokemons';
+
 export type RootStackParamList = {
   Home: undefined;
-  ViewPokemon: { id: number };
+  ViewPokemon: { pokemon: Pokemon };
 };
 
 export type RootDrawerParamList = {

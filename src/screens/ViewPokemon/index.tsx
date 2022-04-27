@@ -5,12 +5,9 @@ import { SvgUri } from 'react-native-svg';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import { RootStackParamList } from 'src/@types/routes.types';
-import { useFetchPokemon } from 'src/hooks/useFetchPokemon';
-import { Loading } from 'src/components/Loading';
 import { getColorOfPokemonType } from 'src/utils/getColorOfPokemonType';
 import { titleString } from 'src/utils/titleString';
 import { getColorOfStat } from 'src/utils/getColorOfStat';
-import { Error as ErrorComponent } from 'src/components/Error';
 
 import styles from './styles';
 
@@ -23,15 +20,7 @@ export function ViewPokemon({
   navigation,
   route,
 }: ViewPokemonProps): JSX.Element {
-  const { pokemon, error, loading } = useFetchPokemon(route.params.id);
-
-  if (error) {
-    return <ErrorComponent />;
-  }
-
-  if (loading) {
-    return <Loading text="Loading pokemon..." />;
-  }
+  const { pokemon } = route.params;
 
   function getTypes(): JSX.Element {
     return (
