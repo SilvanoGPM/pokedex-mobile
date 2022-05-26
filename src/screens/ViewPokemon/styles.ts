@@ -61,13 +61,25 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
 
+  typePopover: {
+    width: '100%',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+
   type: {
     color: '#191919',
     fontFamily: 'RobotoRegular',
-    fontSize: 20,
+    fontSize: 30,
+    marginLeft: 5,
+    width: '100%',
+  },
+
+  typeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginRight: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    padding: 16,
     borderRadius: 10,
   },
 
