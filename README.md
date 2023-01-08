@@ -1,5 +1,5 @@
 <h1 align="center">Pokedex</h1>
-<p align="center">Uma pokedex desenolvida com React native</p>
+<p align="center">Uma pokedex desenvolvida com React native</p>
 <p align="center">
   <img src="./assets/adaptive-icon.png" alt="Pokedex" width=300 height=300 />
 </p>
